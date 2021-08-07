@@ -13,8 +13,8 @@ before_install:
 deploy:
   provider: elasticbeanstalk
   region: 'ap-south-1'
-  app: 'task-manager'
-  env: 'Taskmanager-env'
+  app: 'tasks'
+  env: 'Tasks-env'
   bucket_name: 'elasticbeanstalk-ap-south-1-687671861317'
   bucket_path: 'task-manager'
   on:
