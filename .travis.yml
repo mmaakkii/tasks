@@ -1,0 +1,23 @@
+language: generic
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t makkii/tasks -f Dockerfile .
+
+# script:
+#   - docker run -e CI=true makkii/task-manager
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'ap-south-1'
+  app: 'task-manager'
+  env: 'Taskmanager-env'
+  bucket_name: 'elasticbeanstalk-ap-south-1-687671861317'
+  bucket_path: 'task-manager'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
