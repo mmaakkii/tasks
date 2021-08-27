@@ -1,17 +1,18 @@
 # Base Image
 FROM node:14-alpine
 
-WORKDIR /usr/app
+WORKDIR /usr
 
 COPY package.json .
 
 # Install dependencies
-RUN npm install ts-node --save-dev
-RUN npm install typescript -g 
+# RUN npm install ts-node --save-dev
+# RUN npm install typescript -g 
 RUN npm install
+# RUN npm run build
 
 COPY . .
-
+EXPOSE 80
 #  Default command
 CMD ["npm", "run", "start"]
 

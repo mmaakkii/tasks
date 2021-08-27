@@ -10,6 +10,7 @@ const helmet_1 = __importDefault(require("helmet"));
 const express_1 = __importDefault(require("express"));
 const http_status_codes_1 = __importDefault(require("http-status-codes"));
 require("express-async-errors");
+const mongoose_1 = __importDefault(require("mongoose"));
 const routes_1 = __importDefault(require("./routes"));
 const Logger_1 = __importDefault(require("@shared/Logger"));
 const app = express_1.default();
@@ -45,8 +46,19 @@ const viewsDir = path_1.default.join(__dirname, 'views');
 app.set('views', viewsDir);
 const staticDir = path_1.default.join(__dirname, 'public');
 app.use(express_1.default.static(staticDir));
-app.get('*', (req, res) => {
-    res.sendFile('index.html', { root: viewsDir });
-});
+// app.get('*', (req: Request, res: Response) => {
+//   res.sendFile('index.html', { root: viewsDir })
+// })
+// DB Connection
+const DB = `${process.env.DATABASE_URI}`;
+mongoose_1.default
+    .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+    autoIndex: true,
+})
+    .then(() => console.log('DB connection successful'));
 // Export express instance
 exports.default = app;

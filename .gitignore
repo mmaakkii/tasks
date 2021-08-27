@@ -1,2 +1,3 @@
 node_modules/*
-jet-logger.log
+data/*
+src/pre-start/env/development.env

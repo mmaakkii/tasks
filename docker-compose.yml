@@ -1,29 +1,30 @@
 version: '3.1'
 
 services:
+  mongo:
+    image: 'mongo'
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: tasks
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data:/data/db
+    networks:
+      - mongonetwork
   app:
-    build: .
+    build:
+      context: .
     volumes:
       - .:/app
     # links:
     #   - mongo
     ports:
       - '5000:5000'
-    # depends_on:
-    #   - mongo
-    # networks:
-    #   - mongonetwork
-  # mongo:
-  #   image: 'mongo'
-  #   restart: always
-  #   environment:
-  #     MONGO_INITDB_DATABASE: task-manager
-  #   ports:
-  #     - '27017:27017'
-  #   volumes:
-  #     - ./data:/data/db
-  #   networks:
-  #     - mongonetwork
-# networks:
-#   mongonetwork:
-#     driver: bridge
+    depends_on:
+      - mongo
+    networks:
+      - mongonetwork
+networks:
+  mongonetwork:
+    driver: bridge
