@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.organizationRoutes = void 0;
+const controller_1 = require("../users/controller");
+const express_1 = require("express");
+const controllers_1 = require("./controllers");
+const organizationRoutes = express_1.Router();
+exports.organizationRoutes = organizationRoutes;
+organizationRoutes.post('/', controller_1.protect, controllers_1.createOrganization);
+organizationRoutes.route('/:uid').get(controller_1.protect, controllers_1.getOrganization);
