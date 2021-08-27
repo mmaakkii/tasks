@@ -55,14 +55,16 @@ export default class Email implements IEmail {
         html,
       };
       await this.newTransport().sendMail(mailOptions);
+      return {email: 'success'}
     } catch (err) {
       logger.err(err.message);
       console.log(err.message);
+      return err.message
     }
   }
 
   async sendWelcome() {
-    await this.send('welcome', 'Welcome to the Task Manager.');
+    return await this.send('welcome', 'Welcome to the Task Manager.');
   }
 
   async sendPasswordReset() {

@@ -23,10 +23,11 @@ export const createAccount = async (req: Request, res: Response, next: NextFunct
     const token = newUser.createSignUpToken()
     const url = `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${token}`
     await newUser.save({ validateBeforeSave: false })
-    await new Email(newUser, url).sendWelcome()
+    const emailStatus = await new Email(newUser, url).sendWelcome()
     res.status(201).json({
       success: true,
       doc: newUser,
+      emailStatus
     })
   } catch (err) {
     res.status(400).json({
