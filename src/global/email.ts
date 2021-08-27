@@ -6,6 +6,9 @@ import * as aws from '@aws-sdk/client-ses';
 
 import { IEmail } from '@global/types/index';
 import { IUserDocument } from '../modules/users/types/user';
+import Logger from 'jet-logger';
+
+const logger = new Logger();
 
 export default class Email implements IEmail {
   public user: IUserDocument | null;
@@ -53,6 +56,7 @@ export default class Email implements IEmail {
       };
       await this.newTransport().sendMail(mailOptions);
     } catch (err) {
+      logger.err(err.message);
       console.log(err.message);
     }
   }
