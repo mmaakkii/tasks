@@ -26,7 +26,7 @@ export const createAccount = async (req: Request, res: Response, next: NextFunct
     const emailStatus = await new Email(newUser, url).sendWelcome()
     res.status(201).json({
       success: true,
-      doc: newUser,
+      doc: emailStatus,
       emailStatus: emailStatus || 'Error sending email'
     })
   } catch (err) {
