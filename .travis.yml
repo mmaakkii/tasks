@@ -8,15 +8,20 @@ before_install:
   - docker build -t makkii/tasks -f Dockerfile .
 # script:
 #   - docker run -e CI=true makkii/task-manager
+after_success:
+  - docker logout
+  - docker build -t makkii/tasks .
+  - docker login --username "$DOCKER_ID" --password "$DOCKER_PASSWORD"
+  - docker push makkii/tasks
 
-# deploy:
-#   provider: elasticbeanstalk
-#   region: 'ap-south-1'
-#   app: 'tasks'
-#   env: 'Tasks-env'
-#   bucket_name: 'elasticbeanstalk-ap-south-1-687671861317'
-#   bucket_path: 'task-manager'
-#   on:
-#     branch: master
-#   access_key_id: $AWS_ACCESS_KEY
-#   secret_access_key: $AWS_SECRET_KEY
+deploy:
+  provider: elasticbeanstalk
+  region: 'ap-south-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-ap-south-1-687671861317'
+  bucket_path: 'task-manager'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY

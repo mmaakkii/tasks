@@ -13,9 +13,12 @@ services:
     networks:
       - mongonetwork
   app:
-    image: "makkii/tasks"
-    mem_limit: 128m
-    hostname: app
+    build:
+      context: .
+    volumes:
+      - .:/app
+    # links:
+    #   - mongo
     ports:
       - '80:5000'
     depends_on:
