@@ -53,10 +53,11 @@ const createAccount = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         const token = newUser.createSignUpToken();
         const url = `${req.protocol}://${req.get('host')}/api/v1/users/verify-email/${token}`;
         yield newUser.save({ validateBeforeSave: false });
-        yield new email_1.default(newUser, url).sendWelcome();
+        const emailStatus = yield new email_1.default(newUser, url).sendWelcome();
         res.status(201).json({
             success: true,
             doc: newUser,
+            emailStatus: emailStatus || 'Error sending email'
         });
     }
     catch (err) {

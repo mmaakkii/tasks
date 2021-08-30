@@ -36,6 +36,8 @@ const nodemailer_1 = __importDefault(require("nodemailer"));
 const pug_1 = __importDefault(require("pug"));
 const html_to_text_1 = require("html-to-text");
 const aws = __importStar(require("@aws-sdk/client-ses"));
+const jet_logger_1 = __importDefault(require("jet-logger"));
+const logger = new jet_logger_1.default();
 class Email {
     constructor(user, url) {
         this.to = user.email;
@@ -68,15 +70,18 @@ class Email {
                     html,
                 };
                 yield this.newTransport().sendMail(mailOptions);
+                return { email: 'success' };
             }
             catch (err) {
+                logger.err(err.message);
                 console.log(err.message);
+                return err.message;
             }
         });
     }
     sendWelcome() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.send('welcome', 'Welcome to the Task Manager.');
+            return yield this.send('welcome', 'Welcome to the Task Manager.');
         });
     }
     sendPasswordReset() {
