@@ -83,7 +83,7 @@ const UserSchema = new mongoose_1.Schema({
     signUpTokenExpires: Date,
     isVerified: {
         type: Boolean,
-        default: true,
+        default: false,
         select: false,
     },
     isActive: {

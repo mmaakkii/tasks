@@ -96,7 +96,7 @@ const UserSchema = new Schema<IUserDocument, IUserModel>(
     signUpTokenExpires: Date,
     isVerified: {
       type: Boolean,
-      default: true,
+      default: false,
       select: false,
     },
     isActive: {
